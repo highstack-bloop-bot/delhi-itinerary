@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Delhi in 3 Days · From Hyatt Regency</title>
+<style>
+  :root{
+    --ink:#1c1714; --paper:#fbf6ee; --rust:#b5452a; --rust2:#e0612f;
+    --gold:#c98a2b; --green:#3f6b45; --line:#e7ddcd; --mut:#7a6f64;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{font-family:'Georgia','Times New Roman',serif;background:var(--paper);color:var(--ink);line-height:1.65}
+  img{display:block;width:100%;height:100%;object-fit:cover}
+  a{color:var(--rust)}
+  .wrap{max-width:1080px;margin:0 auto;padding:0 20px}
+
+  /* HERO */
+  header.hero{position:relative;min-height:78vh;display:flex;align-items:flex-end;
+    background:linear-gradient(180deg,rgba(28,23,20,.15),rgba(28,23,20,.82)),
+    url('https://upload.wikimedia.org/wikipedia/commons/thumb/0/06/India_Gate%2C_New_Delhi.jpg/960px-India_Gate%2C_New_Delhi.jpg') center/cover no-repeat;}
+  .hero-inner{padding:0 0 54px;color:#fdf6ea}
+  .kicker{font-family:'Trebuchet MS',sans-serif;letter-spacing:.32em;text-transform:uppercase;
+    font-size:12px;color:#f3c78a;margin-bottom:14px}
+  header.hero h1{font-size:clamp(38px,7vw,76px);line-height:1.02;font-weight:normal;letter-spacing:-.5px}
+  header.hero p{margin-top:16px;font-size:clamp(16px,2.2vw,20px);max-width:620px;color:#efe4d4}
+  .meta{margin-top:22px;display:flex;flex-wrap:wrap;gap:10px}
+  .pill{font-family:'Trebuchet MS',sans-serif;font-size:12.5px;letter-spacing:.04em;
+    background:rgba(253,246,234,.14);border:1px solid rgba(253,246,234,.35);
+    color:#fdf6ea;padding:7px 13px;border-radius:40px;backdrop-filter:blur(3px)}
+
+  /* NAV */
+  nav.days{position:sticky;top:0;z-index:30;background:rgba(251,246,238,.93);
+    backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
+  nav.days .wrap{display:flex;gap:6px;overflow-x:auto;padding-top:12px;padding-bottom:12px}
+  nav.days a{font-family:'Trebuchet MS',sans-serif;text-decoration:none;color:var(--ink);
+    font-size:13.5px;white-space:nowrap;padding:8px 15px;border-radius:30px;border:1px solid var(--line);background:#fff}
+  nav.days a:hover{background:var(--rust);color:#fff;border-color:var(--rust)}
+
+  /* WEATHER NOTE */
+  .note{background:#fff5e8;border:1px solid #f0d9b5;border-left:4px solid var(--gold);
+    border-radius:10px;padding:16px 20px;margin:34px 0;font-size:15px;color:#6a5535}
+  .note b{color:#8a5a17}
+
+  /* DAY HEADER */
+  .day{padding:48px 0 8px}
+  .day-tag{font-family:'Trebuchet MS',sans-serif;letter-spacing:.28em;text-transform:uppercase;
+    font-size:12px;color:var(--rust);margin-bottom:8px}
+  .day h2{font-size:clamp(28px,4.5vw,44px);font-weight:normal;letter-spacing:-.5px}
+  .day .sub{color:var(--mut);font-size:16px;margin-top:6px}
+  .rule{height:2px;background:linear-gradient(90deg,var(--rust),transparent);margin:18px 0 30px;border-radius:2px}
+
+  /* STOP CARD */
+  .stop{display:grid;grid-template-columns:300px 1fr;gap:0;background:#fff;border:1px solid var(--line);
+    border-radius:16px;overflow:hidden;margin-bottom:24px;box-shadow:0 8px 26px rgba(60,40,20,.06)}
+  .stop .ph{position:relative;min-height:230px;background:#eee}
+  .stop .ph .time{position:absolute;top:12px;left:12px;background:rgba(28,23,20,.82);color:#fdf6ea;
+    font-family:'Trebuchet MS',sans-serif;font-size:12px;letter-spacing:.05em;padding:6px 11px;border-radius:30px}
+  .stop .body{padding:24px 26px}
+  .stop .body h3{font-size:23px;font-weight:normal;margin-bottom:4px}
+  .stop .body .loc{font-family:'Trebuchet MS',sans-serif;font-size:12.5px;color:var(--green);
+    letter-spacing:.04em;margin-bottom:12px;text-transform:uppercase}
+  .stop .body p{font-size:15.5px;color:#3d352e}
+  .tips{margin-top:14px;display:flex;flex-wrap:wrap;gap:8px}
+  .tip{font-family:'Trebuchet MS',sans-serif;font-size:12px;background:#f6efe2;border:1px solid var(--line);
+    padding:5px 11px;border-radius:30px;color:#6a5e50}
+
+  /* FOOD STRIP */
+  .food{padding:18px 0 56px}
+  .food h3.fh{font-family:'Trebuchet MS',sans-serif;font-size:13px;letter-spacing:.2em;text-transform:uppercase;
+    color:var(--rust);margin:6px 0 18px;display:flex;align-items:center;gap:10px}
+  .food h3.fh::before{content:"";flex:0 0 26px;height:1px;background:var(--rust)}
+  .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:18px}
+  .dish{background:#fff;border:1px solid var(--line);border-radius:14px;overflow:hidden;box-shadow:0 6px 18px rgba(60,40,20,.05)}
+  .dish .ph{height:150px}
+  .dish .b{padding:13px 15px 16px}
+  .dish .b h4{font-size:17px;font-weight:normal;margin-bottom:3px}
+  .dish .b span{font-family:'Trebuchet MS',sans-serif;font-size:11.5px;color:var(--green);text-transform:uppercase;letter-spacing:.04em}
+  .dish .b p{font-size:13.5px;color:#5a5046;margin-top:7px}
+
+  /* FOOTER */
+  footer{background:var(--ink);color:#e8dccb;padding:46px 0;margin-top:20px}
+  footer .wrap{display:flex;flex-wrap:wrap;justify-content:space-between;gap:18px;align-items:center}
+  footer h4{font-size:22px;font-weight:normal;color:#fdf6ea}
+  footer p{font-size:14px;color:#bcae9c;margin-top:6px;font-family:'Trebuchet MS',sans-serif}
+  .credit{font-size:11.5px;color:#8d8170;font-family:'Trebuchet MS',sans-serif}
+
+  @media(max-width:680px){
+    .stop{grid-template-columns:1fr}
+    .stop .ph{min-height:200px}
+  }
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <div class="wrap hero-inner">
+    <div class="kicker">A 3-Day Field Guide · Base: Hyatt Regency, Bhikaji Cama Place</div>
+    <h1>Delhi, Unhurried</h1>
+    <p>From Lutyens' boulevards to Mughal ramparts and the lanes of Chandni Chowk — three days of monuments, markets and unforgettable meals.</p>
+    <div class="meta">
+      <span class="pill">📅 Fri 26 → Sun 28 June 2026</span>
+      <span class="pill">🏨 Hyatt Regency Delhi</span>
+      <span class="pill">🛺 Use Uber / Ola or metro</span>
+      <span class="pill">☀️ Monsoon-season heat</span>
+    </div>
+  </div>
+</header>
+
+<nav class="days">
+  <div class="wrap">
+    <a href="#day1">Day 1 · New Delhi & Lutyens</a>
+    <a href="#day2">Day 2 · Old Delhi & Mughal</a>
+    <a href="#day3">Day 3 · South Delhi & Temples</a>
+    <a href="#eat">Where to Eat</a>
+  </div>
+</nav>
+
+<div class="wrap">
+  <div class="note">
+    <b>Heads up — late June weather.</b> It's peak summer sliding into monsoon: expect 35–42°C, high humidity and possible afternoon showers. Start sights by 8–9 AM, carry water and a hat, do indoor/garden things at midday, and save monuments for golden hour. Most outdoor sites are open daily; <b>Akshardham is closed Mondays</b> (you're fine — your dates are Fri/Sat/Sun).
+  </div>
+</div>
+
+<!-- ================= DAY 1 ================= -->
+<section class="day" id="day1">
+  <div class="wrap">
+    <div class="day-tag">Day 1 · Friday 26 June</div>
+    <h2>New Delhi & the Lutyens Heart</h2>
+    <div class="sub">Imperial avenues, a perfect Mughal tomb, and leafy garden tombs — all close to your hotel.</div>
+    <div class="rule"></div>
+
+    <div class="stop">
+      <div class="ph"><span class="time">8:30 AM</span>
+        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/06/India_Gate%2C_New_Delhi.jpg/960px-India_Gate%2C_New_Delhi.jpg" alt="India Gate">
+      </div>
+      <div class="body">
+        <h3>India Gate & Kartavya Path</h3>
+        <div class="loc">📍 Rajpath · ~7 km from hotel</div>
+        <p>Begin at the 42 m war memorial arch and stroll the freshly redeveloped Kartavya Path toward the floodlit canopy. Early morning means soft light, joggers and far fewer crowds. Glimpse the President's Estate (Rashtrapati Bhavan) and Parliament at the far end.</p>
+        <div class="tips"><span class="tip">Go early — shade is scarce</span><span class="tip">Free</span><span class="tip">30–45 min</span></div>
+      </div>
+    </div>
+
+    <div class="stop">
+      <div class="ph"><span class="time">10:30 AM</span>
+        <img src="https://commons.wikimedia.org/wiki/Special:FilePath/Tomb_of_Humayun,_Delhi.jpg?width=800" alt="Humayun's Tomb">
+      </div>
+      <div class="body">
+        <h3>Humayun's Tomb</h3>
+        <div class="loc">📍 Nizamuddin East · UNESCO Site</div>
+        <p>The garden-tomb that rehearsed the Taj Mahal — red sandstone and white marble set in formal charbagh gardens. Quieter than the Taj and arguably more elegant. Wander to the nearby Isa Khan's octagonal tomb inside the same complex.</p>
+        <div class="tips"><span class="tip">₹600 foreigner / ₹40 Indian</span><span class="tip">1.5 hrs</span><span class="tip">Best photos: morning</span></div>
+      </div>
+    </div>
+
+    <div class="stop">
+      <div class="ph"><span class="time">1:30 PM</span>
+        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c3/A_path_in_Lodhi_Gardens%2C_Delhi.jpg/960px-A_path_in_Lodhi_Gardens%2C_Delhi.jpg" alt="Lodhi Gardens">
+      </div>
+      <div class="body">
+        <h3>Lunch at Khan Market → Lodhi Garden</h3>
+        <div class="loc">📍 Khan Market / Lodhi Road</div>
+        <p>Lunch among Delhi's smartest cafés at Khan Market, then escape the heat in the 90-acre Lodhi Garden — 15th-century Sayyid & Lodhi-era tombs scattered across lawns and old trees. Pair it with the open-air <b>Lodhi Art District</b> murals nearby if you have energy.</p>
+        <div class="tips"><span class="tip">Garden free</span><span class="tip">Shade & benches</span><span class="tip">Sunset spot</span></div>
+      </div>
+    </div>
+
+    <div class="stop">
+      <div class="ph"><span class="time">7:00 PM</span>
+        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/33/Connaught_High_Street%2C_Connaught_Place%2C_New_Delhi.jpg/960px-Connaught_High_Street%2C_Connaught_Place%2C_New_Delhi.jpg" alt="Connaught Place">
+      </div>
+      <div class="body">
+        <h3>Evening at Connaught Place</h3>
+        <div class="loc">📍 CP · the colonnaded city centre</div>
+        <p>Round off with dinner at colonial-era Connaught Place — choose legendary butter chicken at <b>Kake Da Hotel</b>, refined regional food at <b>Saravana Bhavan</b> (veg), or rooftop cocktails. Don't miss <b>Wenger's</b> for pastries if open.</p>
+        <div class="tips"><span class="tip">Many restaurants</span><span class="tip">Lively after dark</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= DAY 2 ================= -->
+<section class="day" id="day2">
+  <div class="wrap">
+    <div class="day-tag">Day 2 · Saturday 27 June</div>
+    <h2>Old Delhi & the Mughal City</h2>
+    <div class="sub">Ramparts, the grandest mosque in India, and the most delicious chaos of Chandni Chowk.</div>
+    <div class="rule"></div>
+
+    <div class="stop">
+      <div class="ph"><span class="time">8:30 AM</span>
+        <img src="https://commons.wikimedia.org/wiki/Special:FilePath/Red_Fort_in_Delhi_03-2016_img3.jpg?width=800" alt="Red Fort">
+      </div>
+      <div class="body">
+        <h3>Red Fort (Lal Qila)</h3>
+        <div class="loc">📍 Netaji Subhash Marg · UNESCO Site</div>
+        <p>Shah Jahan's mighty red-sandstone fort and seat of Mughal power for 200 years. Enter at Lahori Gate through the covered Chatta Chowk bazaar to the Diwan-i-Aam and marble Diwan-i-Khas. Go at opening to beat heat and crowds.</p>
+        <div class="tips"><span class="tip">Closed Mondays (you're fine)</span><span class="tip">₹600 / ₹35</span><span class="tip">1.5 hrs</span></div>
+      </div>
+    </div>
+
+    <div class="stop">
+      <div class="ph"><span class="time">10:45 AM</span>
+        <img src="https://commons.wikimedia.org/wiki/Special:FilePath/Jama_Masjid_Delhi.jpg?width=800" alt="Jama Masjid">
+      </div>
+      <div class="body">
+        <h3>Jama Masjid</h3>
+        <div class="loc">📍 5 min from Red Fort</div>
+        <p>India's largest mosque, with a courtyard for 25,000 worshippers. Climb the southern minaret for a sweeping rooftop view over Old Delhi's tangle of lanes. Dress modestly (robes provided); avoid prayer times.</p>
+        <div class="tips"><span class="tip">Entry free · camera fee</span><span class="tip">Cover shoulders/knees</span><span class="tip">Remove shoes</span></div>
+      </div>
+    </div>
+
+    <div class="stop">
+      <div class="ph"><span class="time">12:00 PM</span>
+        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/0a/Carts_parked_on_the_Spice_Market%2C_Khari_Baoli_Road%2C_Old_Delhi.jpg/960px-Carts_parked_on_the_Spice_Market%2C_Khari_Baoli_Road%2C_Old_Delhi.jpg" alt="Khari Baoli spice market">
+      </div>
+      <div class="body">
+        <h3>Chandni Chowk & Khari Baoli</h3>
+        <div class="loc">📍 Old Delhi's main bazaar</div>
+        <p>Dive into the 17th-century market — a cycle-rickshaw ride is the classic way through the crush. Eat your way down <b>Paranthe Wali Gali</b>, sample kebabs at <b>Karim's</b> near Jama Masjid, then walk Asia's largest spice market, <b>Khari Baoli</b> (the chillies will make you sneeze).</p>
+        <div class="tips"><span class="tip">Cash handy</span><span class="tip">Street-food heaven</span><span class="tip">Take a rickshaw</span></div>
+      </div>
+    </div>
+
+    <div class="stop">
+      <div class="ph"><span class="time">5:00 PM</span>
+        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/29/Jagannath_Temple%2C_Hauz_Khas%2C_Delhi-2.jpg/960px-Jagannath_Temple%2C_Hauz_Khas%2C_Delhi-2.jpg" alt="Temple architecture">
+      </div>
+      <div class="body">
+        <h3>Raj Ghat & a slow evening</h3>
+        <div class="loc">📍 Ring Road, by the Yamuna</div>
+        <p>Pause at the serene black-marble memorial to Mahatma Gandhi, set in landscaped lawns — a calm counterpoint to the morning's intensity. Head back to refresh, then dinner of slow-cooked Mughlai food (try <b>Bukhara</b> at ITC Maurya if you want the city's most famous dal & kebabs — book ahead).</p>
+        <div class="tips"><span class="tip">Free</span><span class="tip">Quiet & green</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= DAY 3 ================= -->
+<section class="day" id="day3">
+  <div class="wrap">
+    <div class="day-tag">Day 3 · Sunday 28 June</div>
+    <h2>South Delhi, Towers & Temples</h2>
+    <div class="sub">A soaring victory tower, a lotus of marble, the dazzling Akshardham, and a buzzing village of cafés.</div>
+    <div class="rule"></div>
+
+    <div class="stop">
+      <div class="ph"><span class="time">8:30 AM</span>
+        <img src="https://commons.wikimedia.org/wiki/Special:FilePath/Qutb_Minar_2011.jpg?width=800" alt="Qutub Minar">
+      </div>
+      <div class="body">
+        <h3>Qutub Minar Complex</h3>
+        <div class="loc">📍 Mehrauli · UNESCO Site</div>
+        <p>The 73 m soaring 12th-century victory tower — the tallest brick minaret in the world — amid a complex of early Indo-Islamic ruins, the Alai Darwaza, and the famous rust-resistant Iron Pillar. Go first thing while the stone is cool.</p>
+        <div class="tips"><span class="tip">₹600 / ₹40</span><span class="tip">1 hr</span></div>
+      </div>
+    </div>
+
+    <div class="stop">
+      <div class="ph"><span class="time">10:30 AM</span>
+        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/3a/Lotus_Temple_in_New_Delhi_03-2016_img3.jpg/960px-Lotus_Temple_in_New_Delhi_03-2016_img3.jpg" alt="Lotus Temple"
+             onerror="this.src='https://commons.wikimedia.org/wiki/Special:FilePath/Lotus_Temple_in_New_Delhi_03-2016.jpg?width=800'">
+      </div>
+      <div class="body">
+        <h3>Lotus Temple (Bahá'í House of Worship)</h3>
+        <div class="loc">📍 Kalkaji · 27 marble petals</div>
+        <p>An architectural icon shaped like a half-open lotus — all are welcome to sit in silence inside, regardless of faith. Beautiful gardens and pools surround it. Note: closed Mondays, but Sunday works perfectly.</p>
+        <div class="tips"><span class="tip">Free</span><span class="tip">Silence inside</span><span class="tip">Shoes off</span></div>
+      </div>
+    </div>
+
+    <div class="stop">
+      <div class="ph"><span class="time">2:00 PM</span>
+        <img src="https://upload.wikimedia.org/wikipedia/commons/b/bd/Akshardham_Delhi.jpg" alt="Akshardham Temple">
+      </div>
+      <div class="body">
+        <h3>Swaminarayan Akshardham</h3>
+        <div class="loc">📍 Noida Mor · vast & ornate</div>
+        <p>A breathtaking modern temple of intricately carved sandstone and marble, with exhibitions, a step-well courtyard and a musical fountain show after dark. Allow plenty of time. <b>No phones/cameras/bags inside</b> — free cloakroom provided. Closed Mondays.</p>
+        <div class="tips"><span class="tip">Entry free</span><span class="tip">Security is strict</span><span class="tip">Evening fountain show</span></div>
+      </div>
+    </div>
+
+    <div class="stop">
+      <div class="ph"><span class="time">6:00 PM</span>
+        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/90/A_view_of_Hauz_Khas_Fort_Complex.jpg/960px-A_view_of_Hauz_Khas_Fort_Complex.jpg" alt="Hauz Khas">
+      </div>
+      <div class="body">
+        <h3>Hauz Khas Village + Dilli Haat</h3>
+        <div class="loc">📍 South Delhi · ruins meet nightlife</div>
+        <p>End with the medieval reservoir, ruined madrasa and tomb of Hauz Khas overlooking a deer park — then the village's boutiques, rooftop bars and restaurants for a lively final evening. Prefer crafts? Swing by <b>Dilli Haat</b> for handicrafts and regional food stalls.</p>
+        <div class="tips"><span class="tip">Sunset over the lake</span><span class="tip">Great for dinner</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= FOOD ================= -->
+<section class="food" id="eat">
+  <div class="wrap">
+    <div class="day-tag" style="color:var(--gold)">Eat Like a Local</div>
+    <h2 style="font-weight:normal;font-size:clamp(28px,4.5vw,44px)">What to Eat in Delhi</h2>
+    <div class="rule" style="background:linear-gradient(90deg,var(--gold),transparent)"></div>
+
+    <h3 class="fh">Savoury & street</h3>
+    <div class="grid">
+      <div class="dish"><div class="ph"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/28/Butter_chicken_rice_bowl_-_chaiiwala_2024-02-10.jpg/960px-Butter_chicken_rice_bowl_-_chaiiwala_2024-02-10.jpg" alt="Butter chicken"></div>
+        <div class="b"><h4>Butter Chicken</h4><span>Delhi-born classic</span><p>Tandoori chicken in a silky tomato-butter gravy — invented in Delhi at Moti Mahal. Best mopped up with naan.</p></div></div>
+
+      <div class="dish"><div class="ph"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/f0/Chole_Bhature_3.jpg/960px-Chole_Bhature_3.jpg" alt="Chole bhature"></div>
+        <div class="b"><h4>Chole Bhature</h4><span>Punjabi breakfast</span><p>Spicy chickpea curry with giant puffed fried bread. Try it at Sita Ram Diwan Chand in Paharganj.</p></div></div>
+
+      <div class="dish"><div class="ph"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/fe/Indian_Paratha_Plate.JPG/960px-Indian_Paratha_Plate.JPG" alt="Paratha"></div>
+        <div class="b"><h4>Stuffed Parathas</h4><span>Paranthe Wali Gali</span><p>Ghee-fried flatbreads stuffed with potato, paneer, even cashew — a 100-year-old Chandni Chowk lane is devoted to them.</p></div></div>
+
+      <div class="dish"><div class="ph"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/5d/Indian_Chicken_Seekh_Kebab.jpg/960px-Indian_Chicken_Seekh_Kebab.jpg" alt="Seekh kebab"></div>
+        <div class="b"><h4>Kebabs at Karim's</h4><span>Old Delhi institution</span><p>Mughlai seekh and shami kebabs, mutton korma and rumali roti, served since 1913 beside Jama Masjid.</p></div></div>
+
+      <div class="dish"><div class="ph"><img src="https://upload.wikimedia.org/wikipedia/commons/a/ad/Golgappa_%28Pani_Puri%29.jpg" alt="Golgappa"></div>
+        <div class="b"><h4>Golgappa / Chaat</h4><span>Street snack</span><p>Crisp hollow shells filled with spiced water — plus aloo tikki and dahi bhalla. UPSC/CP stalls are famous.</p></div></div>
+
+      <div class="dish"><div class="ph"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/23/A_home_made_plate_of_mutton_biryani_served_with_chicken_kassa_cooked_in_the_bengali_style.jpg/960px-A_home_made_plate_of_mutton_biryani_served_with_chicken_kassa_cooked_in_the_bengali_style.jpg" alt="Biryani"></div>
+        <div class="b"><h4>Biryani & Korma</h4><span>Mughlai feast</span><p>Fragrant layered rice with slow-cooked meat. Old Delhi's Matia Mahal lane is the place to hunt it down.</p></div></div>
+    </div>
+
+    <h3 class="fh" style="margin-top:34px">Sweet endings</h3>
+    <div class="grid">
+      <div class="dish"><div class="ph"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/91/Jalebi-_Kolkata_-_West_Bengal_-_DSC_0011.jpg/960px-Jalebi-_Kolkata_-_West_Bengal_-_DSC_0011.jpg" alt="Jalebi"></div>
+        <div class="b"><h4>Jalebi</h4><span>Hot & syrupy</span><p>Coils of deep-fried batter soaked in saffron syrup. Old Famous Jalebi Wala in Chandni Chowk is the address.</p></div></div>
+
+      <div class="dish"><div class="ph"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/d/d3/Kulfi_2.jpg/960px-Kulfi_2.jpg" alt="Kulfi"></div>
+        <div class="b"><h4>Kulfi Falooda</h4><span>Beat the heat</span><p>Dense, slow-churned Indian ice cream with vermicelli and rose. Kuremal Mohan Lal serves stuffed-fruit kulfi.</p></div></div>
+
+      <div class="dish"><div class="ph"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/eb/Aadi_Mahotsav_2021_%E2%80%93_Dilli_Haat_IMG_20210214_175455_01.jpg/960px-Aadi_Mahotsav_2021_%E2%80%93_Dilli_Haat_IMG_20210214_175455_01.jpg" alt="Dilli Haat food"></div>
+        <div class="b"><h4>Daulat ki Chaat</h4><span>Winter-only froth</span><p>An ethereal saffron milk-foam dessert of Old Delhi — seasonal, so a summer visit may miss it, but ask around.</p></div></div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div>
+      <h4>Have a wonderful Delhi trip ✨</h4>
+      <p>Base camp: Hyatt Regency Delhi · Fri 26 – Sun 28 June 2026</p>
+    </div>
+    <div class="credit">Itinerary crafted for Toby · Images: Wikimedia Commons (CC)</div>
+  </div>
+</footer>
+
+</body>
+</html>
